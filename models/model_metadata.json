@@ -1,0 +1,44 @@
+{
+    "model_name": "GradientBoosting",
+    "metrics": {
+        "LinearRegression": {
+            "R2": 0.9722292166045291,
+            "MAE": 36993.61632043009,
+            "RMSE": 48515.219220058345
+        },
+        "RandomForest": {
+            "R2": 0.9736214220154032,
+            "MAE": 37902.40206475109,
+            "RMSE": 47283.50068567432
+        },
+        "GradientBoosting": {
+            "R2": 0.9886705857172011,
+            "MAE": 24409.66127705688,
+            "RMSE": 30987.58003975691
+        }
+    },
+    "best_metrics": {
+        "R2": 0.9886705857172011,
+        "MAE": 24409.66127705688,
+        "RMSE": 30987.58003975691
+    },
+    "feature_importances": {
+        "SquareFeet": 0.5619864982170106,
+        "Neighborhood_GreenValley": 0.15340508208082454,
+        "Neighborhood_Suburbs": 0.10359594776298497,
+        "Neighborhood_Lakeside": 0.0721953876441556,
+        "Bathrooms": 0.027840099861227284,
+        "Bedrooms": 0.027017333994190453,
+        "Condition": 0.014236908871705188,
+        "HouseAge": 0.012796987812079826,
+        "Neighborhood_Highlands": 0.012721092388469569,
+        "SqFtPerRoom": 0.011720147236607584,
+        "HasPool_1": 0.0019873834289106493,
+        "HasGarage_1": 0.0004971307018338679
+    },
+    "average_price": 902943.3378055267,
+    "average_sqft": 3004.632666666667,
+    "average_age": 38.95133333333333,
+    "price_min": 224394.13924326302,
+    "price_max": 1855944.3553548374
+}

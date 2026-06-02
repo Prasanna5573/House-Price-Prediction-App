@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumPrice | AI-Powered Real Estate Analytics</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="background-glow">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-house-laptop"></i>
+                <span>Quantum<span>Price</span></span>
+            </div>
+            <div class="header-tag">
+                <span class="badge"><i class="fa-solid fa-bolt"></i> Gradient Boosting v1.0</span>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Left Panel: Input controls -->
+            <section class="card input-card glass">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-sliders"></i> Property Parameters</h2>
+                    <p>Adjust the controls below to configure the target home features.</p>
+                </div>
+
+                <form id="prediction-form" class="prediction-form">
+                    <!-- Square Footage -->
+                    <div class="form-group">
+                        <div class="label-wrapper">
+                            <label for="SquareFeet"><i class="fa-solid fa-ruler-combined"></i> Living Area (Sq Ft)</label>
+                            <span id="sqft-val" class="value-display">2,500 sq ft</span>
+                        </div>
+                        <input type="range" id="SquareFeet" name="SquareFeet" min="1000" max="5000" step="50" value="2500" class="slider">
+                    </div>
+
+                    <!-- Layout config (Grid) -->
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="Bedrooms"><i class="fa-solid fa-bed"></i> Bedrooms</label>
+                            <div class="select-wrapper">
+                                <select id="Bedrooms" name="Bedrooms">
+                                    <option value="1">1 Bedroom</option>
+                                    <option value="2">2 Bedrooms</option>
+                                    <option value="3" selected>3 Bedrooms</option>
+                                    <option value="4">4 Bedrooms</option>
+                                    <option value="5">5 Bedrooms</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Bathrooms"><i class="fa-solid fa-bath"></i> Bathrooms</label>
+                            <div class="select-wrapper">
+                                <select id="Bathrooms" name="Bathrooms">
+                                    <option value="1">1.0 Bath</option>
+                                    <option value="1.5">1.5 Baths</option>
+                                    <option value="2" selected>2.0 Baths</option>
+                                    <option value="2.5">2.5 Baths</option>
+                                    <option value="3">3.0 Baths</option>
+                                    <option value="3.5">3.5 Baths</option>
+                                    <option value="4">4.0 Baths</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Neighborhood & Year Built -->
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="Neighborhood"><i class="fa-solid fa-map-location-dot"></i> Neighborhood</label>
+                            <div class="select-wrapper">
+                                <select id="Neighborhood" name="Neighborhood">
+                                    <option value="Lakeside">Lakeside (Premium)</option>
+                                    <option value="Downtown">Downtown (Urban)</option>
+                                    <option value="Highlands">Highlands (Scenic)</option>
+                                    <option value="Suburbs" selected>Suburbs (Standard)</option>
+                                    <option value="GreenValley">GreenValley (Value)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="label-wrapper">
+                                <label for="YearBuilt"><i class="fa-solid fa-calendar-days"></i> Year Built</label>
+                                <span id="year-val" class="value-display">2000</span>
+                            </div>
+                            <input type="range" id="YearBuilt" name="YearBuilt" min="1950" max="2026" step="1" value="2000" class="slider">
+                        </div>
+                    </div>
+
+                    <!-- Amenities (Toggles) -->
+                    <div class="amenities-container">
+                        <label class="toggle-container">
+                            <input type="checkbox" id="HasGarage" name="HasGarage" checked>
+                            <span class="toggle-box">
+                                <i class="fa-solid fa-warehouse"></i>
+                                <span>Attached Garage</span>
+                            </span>
+                        </label>
+
+                        <label class="toggle-container">
+                            <input type="checkbox" id="HasPool" name="HasPool">
+                            <span class="toggle-box">
+                                <i class="fa-solid fa-water-ladder"></i>
+                                <span>Swimming Pool</span>
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Star rating for Condition -->
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-star"></i> Property Condition</label>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="Condition" value="5">
+                            <label for="star5" title="Excellent"><i class="fa-solid fa-star"></i></label>
+                            
+                            <input type="radio" id="star4" name="Condition" value="4">
+                            <label for="star4" title="Good"><i class="fa-solid fa-star"></i></label>
+                            
+                            <input type="radio" id="star3" name="Condition" value="3" checked>
+                            <label for="star3" title="Average"><i class="fa-solid fa-star"></i></label>
+                            
+                            <input type="radio" id="star2" name="Condition" value="2">
+                            <label for="star2" title="Fair"><i class="fa-solid fa-star"></i></label>
+                            
+                            <input type="radio" id="star1" name="Condition" value="1">
+                            <label for="star1" title="Poor"><i class="fa-solid fa-star"></i></label>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="predict-btn" class="btn-primary">
+                        <span class="btn-text">Estimate Valuation</span>
+                        <span class="spinner"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Right Panel: Results & Visualizations -->
+            <div class="results-column">
+                <!-- Result card -->
+                <section class="card result-card glass">
+                    <div id="welcome-message" class="result-placeholder">
+                        <i class="fa-solid fa-calculator-combined placeholder-icon animate-pulse"></i>
+                        <h3>Ready for Valuation</h3>
+                        <p>Configure parameters on the left and click <strong>Estimate Valuation</strong> to run our machine learning model.</p>
+                    </div>
+
+                    <div id="prediction-results" class="prediction-results hidden">
+                        <div class="results-main">
+                            <span class="results-title">Estimated Market Value</span>
+                            <div class="price-display">
+                                <span class="currency">$</span><span id="price-value">0</span>
+                            </div>
+                            <div class="confidence-interval">
+                                <span>Estimated Range:</span>
+                                <strong id="price-range">$0 - $0</strong>
+                            </div>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- Context Comparison Card -->
+                        <div class="market-insights">
+                            <div class="insight-item">
+                                <div class="insight-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                                <div class="insight-content">
+                                    <span id="avg-comparison-title">Vs Market Average</span>
+                                    <p id="avg-comparison-desc">Calculating market delta...</p>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                                <div class="insight-content">
+                                    <span>Building Vintage</span>
+                                    <p id="vintage-desc">Calculating building age...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Model Stats & Performance -->
+                <section class="card stats-card glass">
+                    <div class="card-header tabs-header">
+                        <button class="tab-btn active" data-tab="tab-importance"><i class="fa-solid fa-chart-bar"></i> Feature Impact</button>
+                        <button class="tab-btn" data-tab="tab-metrics"><i class="fa-solid fa-square-poll-vertical"></i> Model Integrity</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-importance">
+                        <div class="chart-container">
+                            <canvas id="importanceChart"></canvas>
+                        </div>
+                        <p class="chart-caption">This chart shows how heavily each feature impacts the price. Derived dynamically from the model's Gini importance scores.</p>
+                    </div>
+
+                    <div class="tab-content" id="tab-metrics">
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <span class="metric-label">Model Architecture</span>
+                                <span id="metric-model" class="metric-val">--</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-label">R² Score (Accuracy)</span>
+                                <span id="metric-r2" class="metric-val">--</span>
+                                <div class="progress-bar-container">
+                                    <div id="r2-progress" class="progress-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-label">Mean Absolute Error</span>
+                                <span id="metric-mae" class="metric-val">--</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-label">Root Mean Squared Error</span>
+                                <span id="metric-rmse" class="metric-val">--</span>
+                            </div>
+                        </div>
+                        <div class="evaluation-summary">
+                            <p><i class="fa-solid fa-circle-check"></i> Scikit-Learn pipeline auto-trained and serialized with 80/20 train-test cross-validation.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <p>&copy; 2026 QuantumPrice Inc. Powered by Scikit-Learn Regression Pipelines & Flask.</p>
+        </footer>
+    </div>
+
+    <!-- Main Application Code -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
